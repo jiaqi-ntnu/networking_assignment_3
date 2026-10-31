@@ -27,11 +27,11 @@ class Packet:
     args: str | None = ""
 
     def encode(self) -> bytes:
-        return json.dumps(asdict(self)).encode()
+        return json.dumps(asdict(self)).encode()+b'\n'
 
     @classmethod
     def decode(cls, payload: bytes) -> "Packet":
-        return cls(**json.loads(payload.decode()))
+        return cls(**json.loads(payload.rstrip(b'\n').decode()))
 
 
 if __name__ == "__main__":

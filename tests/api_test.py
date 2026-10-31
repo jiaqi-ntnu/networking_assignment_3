@@ -1,6 +1,6 @@
 import pytest
 
-from assignment_3.api import Command, Packet, Type  # Update import path as needed
+from assignment_3.Common.api import Command, Packet, Type  # Update import path as needed
 
 e_type = Type.Client
 e_command = Command.MESSAGE

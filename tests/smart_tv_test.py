@@ -2,7 +2,7 @@ import multiprocessing
 
 import pytest
 
-from assignment_3.smart_tv import SmartTV
+from assignment_3.TV.smart_tv import SmartTV
 
 e_channelCount = 3
 

@@ -1,16 +1,21 @@
 import logging
 
-from .api import Command, Packet, Type
+from ..Common.api import Command, Packet, Type
 from .client_handler import ClientHandler
 
 
 class Remote:
     def __init__(
-        self, host: str = "localhost", port: int = 1238, protocol: str = "TCP"
+        self,
+        host: str = "localhost",
+        port: int = 1238,
+        protocol: str = "TCP",
+        index: int = -1,
     ) -> None:
         self._host = host
         self._port = port
         self._protocol = protocol
+        self._index = index
 
     def start(self):
         self._clientHandler = ClientHandler(
@@ -18,12 +23,18 @@ class Remote:
         )
         self._clientHandler.startRemoteClient()
 
+    async def startAsync(self):
+        self._clientHandler = ClientHandler(
+            self._host, self._port, protocol=self._protocol, index=self._index
+        )
+        await self._clientHandler.connectAndListenToServerAsync()
+
     def _sendCommand(self, commandCode: Command, args: str = ""):
 
         outPacket = Packet(type=Type.Client, commandCode=commandCode, args=args)
-        self._clientHandler.sendPacket(outPacket)
-        # logging.debug(f"Remote: sending Command.{commandCode.name}")
-        logging.debug(self._clientHandler.getServerMessage())
+        
+        self._clientHandler.sendPacket(outPacket) 
+        logging.debug(f"Remote {self._index}: sending Command.{commandCode.name}")
 
     def moveChannelUp(self):
         self._sendCommand(Command.UP)

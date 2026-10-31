@@ -33,6 +33,12 @@ class SmartTV:
         self._serverHandler = ServerHandler(self, protocol=self._protocol)
         self._serverHandler.startServer(self._serverReadyEvent)
 
+    async def startMulti(self):
+        from .server_handler import ServerHandler
+
+        self._serverHandler = ServerHandler(self, protocol=self._protocol)
+        await self._serverHandler.startTCPMultiServer(self._serverReadyEvent)
+
     def restartServer(self):
         self._serverHandler.stopServer()
         self._serverHandler.startServer(self._serverReadyEvent)

@@ -1,11 +1,10 @@
-import logging
 import multiprocessing
 
-from .remote import Remote
-from .smart_tv import SmartTV
+from .Remote.remote import Remote
+from .TV.smart_tv import SmartTV
 
 
-def main(protocol:str = "TCP"):
+def part1_2(protocol: str = "TCP"):
     host = "127.0.0.1"
     port = 1238
 
